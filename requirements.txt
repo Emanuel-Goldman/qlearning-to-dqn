@@ -1,6 +1,11 @@
-torch>=2.0.0
-gymnasium>=0.29.0
-numpy>=1.24.0
-matplotlib>=3.7.0
-tensorboard>=2.13.0
+# Requirements for RL Assignment Submission
+# Install with: pip install -r requirements.txt
 
+# Core dependencies
+numpy>=1.21.0
+matplotlib>=3.4.0
+gymnasium>=0.28.0
+
+# Deep learning dependencies (required for Section 2 and Section 3)
+torch>=1.12.0
+tensorboard>=2.10.0
