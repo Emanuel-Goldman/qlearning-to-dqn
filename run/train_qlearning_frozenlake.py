@@ -3,7 +3,13 @@
 import argparse
 import numpy as np
 import os
+import sys
 from typing import List, Tuple
+
+# Add project root to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
 from src.common.seed import set_seed
 from src.common.plotting import (

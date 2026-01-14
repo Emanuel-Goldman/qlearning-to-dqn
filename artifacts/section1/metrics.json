@@ -1,0 +1,12 @@
+{
+  "num_episodes": 5000,
+  "final_epsilon": 0.01,
+  "mean_reward": 0.5296,
+  "std_reward": 0.4991230709955211,
+  "mean_steps_to_goal": 33.7164,
+  "std_steps_to_goal": 25.380472238317395,
+  "success_rate": 0.5296,
+  "q_table_max": 0.8555744602614885,
+  "q_table_min": 0.0,
+  "q_table_mean": 0.2487119485472604
+}
