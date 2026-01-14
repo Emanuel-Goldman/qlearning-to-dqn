@@ -4,7 +4,7 @@ import argparse
 import numpy as np
 import os
 import sys
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 # Add project root to Python path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -105,7 +105,8 @@ def train_qlearning(
     num_episodes: int = 5000,
     max_steps_per_episode: int = 100,
     save_checkpoints: List[int] = [500, 2000],
-    output_dir: str = "artifacts/section1"
+    output_dir: str = "artifacts/section1",
+    seed: Optional[int] = None
 ) -> Tuple[List[float], List[int], dict]:
     """
     Train Q-learning agent.
@@ -117,6 +118,7 @@ def train_qlearning(
         max_steps_per_episode: Maximum steps per episode
         save_checkpoints: Episode numbers at which to save Q-table visualizations
         output_dir: Directory to save outputs
+        seed: Random seed for environment reset (only used for first episode)
         
     Returns:
         Tuple of (episode_rewards, steps_to_goal, metrics_dict)
@@ -127,7 +129,11 @@ def train_qlearning(
     os.makedirs(output_dir, exist_ok=True)
     
     for episode in range(num_episodes):
-        state, _ = env.reset()
+        # Seed the first reset to ensure reproducible initial states
+        if episode == 0 and seed is not None:
+            state, _ = env.reset(seed=seed)
+        else:
+            state, _ = env.reset()
         total_reward = 0
         steps = 0
         done = False
@@ -229,6 +235,11 @@ def main():
     
     # Create environment
     env = make_frozenlake_env(version="v0", is_slippery=True)
+    
+    # Seed environment action and observation spaces for reproducibility
+    env.action_space.seed(args.seed)
+    env.observation_space.seed(args.seed)
+    
     n_states = env.observation_space.n
     n_actions = env.action_space.n
     
@@ -248,7 +259,8 @@ def main():
         agent=agent,
         num_episodes=args.episodes,
         max_steps_per_episode=args.max_steps,
-        output_dir=args.output_dir
+        output_dir=args.output_dir,
+        seed=args.seed
     )
     
     # Save plots
